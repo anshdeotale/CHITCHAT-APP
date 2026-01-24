@@ -1,0 +1,22 @@
+{
+  "name": "chitchat-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix && npm install --prefix frontend/vite-project &&npm run build --prefix frontend/vite-project",
+   "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anshdeotale/CHITCHAT-APP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/anshdeotale/CHITCHAT-APP/issues"
+  },
+  "homepage": "https://github.com/anshdeotale/CHITCHAT-APP#readme"
+}
