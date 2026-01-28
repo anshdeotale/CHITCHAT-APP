@@ -1,3 +1,5 @@
+import User from "../models/User.js";
+import bcrypt from "bcryptjs"
 export const signup = async (req, res)=> {
     const {fullname, email, password}= req.body
 
@@ -14,7 +16,36 @@ export const signup = async (req, res)=> {
         if(!emailRegex.test(email)){
             return res.status(400).json({message:"Invalid email format"});
         }
-    }catch (error){
 
+     const user = await User.findOne({email});
+     if(user)return res.status(400).json({message:"Email alredy exists"})    
+     //123456 => $fjshgndj_?dfftb
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword= await bcrypt.hash(password,salt)
+    
+    const newUser = new User({
+        fullname,
+        email,
+        password: hashedPassword
+    })
+
+    if(newUser) {
+        generateToken(newUser._id,res)
+        await newUser.save();
+
+        res.status(201).json({
+            _id:newUser._id,
+            fullname:newUser.fullname,
+            email:newUser.email,
+            profilpic: newUser.profilepic
+        });
+
+    }else {
+        res.status(400).json({message:"Invalid user data"})
+    }
+
+    }catch (error){
+        console.log("Error in signup controller:",error);
+        res.status(500).json({message:"Internal server error"});
     }
 };
