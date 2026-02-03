@@ -1,7 +1,7 @@
-import {resend} from "resend";
+import {Resend} from "resend";
 import "dotenv/config";
 
-export const resendClient = new resend(process.env.RESEND_API_KEY);
+export const resendClient = new Resend(process.env.RESEND_API_KEY);
 
 
 export const sender = {
