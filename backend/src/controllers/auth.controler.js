@@ -71,7 +71,7 @@ export const login = async (req,res) =>{
         if(!user) return res.status(400).json({message:"Invalid Credintial"});
             //never tell client which one is incorrect
         const isPasswordCorrect = await bcrypt.compare(password,user.password)
-        if(!user) return res.status(400).json({message:"Invalid Credintial"});
+        if(!isPasswordCorrect) return res.status(400).json({message:"Invalid Credintial"});
 
         generateToken(user._id,res)
 
@@ -85,4 +85,9 @@ export const login = async (req,res) =>{
         console.error("Error in login controller:",error);
         res.status(500).json({message: "Internal server error"});
     }
+};
+
+export const logout = (_, res) => {
+  res.cookie("jwt", "", { maxAge: 0 });
+  res.status(200).json({ message: "Logged out successfully" });
 };
